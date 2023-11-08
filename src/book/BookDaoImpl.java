@@ -13,7 +13,14 @@ import connection.ConnectionManager;
 public class BookDaoImpl implements BookDao {
 
 	private Connection connection = null;
-
+	
+	/**
+	 * This method is used to create the connection between the Java Application and the mySQL server.
+	 * An exception is thrown if the class is not found or if there is a SQL error
+	 * 
+	 *  @return 
+	 */
+	
 	@Override
 	public void establishConnection() throws ClassNotFoundException, SQLException {
 
@@ -21,6 +28,11 @@ public class BookDaoImpl implements BookDao {
 			connection = ConnectionManager.getConnection();
 		}
 	}
+	
+	/**
+	 * This method closes the connection between the Java Application and the mySQL server.
+	 * An exception is thrown if there is a SQL error.
+	 */
 
 	@Override
 	public void closeConnection() throws SQLException {
@@ -28,6 +40,12 @@ public class BookDaoImpl implements BookDao {
 		connection.close();
 	}
 
+	/**
+	 * This method is used to return all the books that are in the book table.
+	 * 
+	 * @return 
+	 */
+	
 	@Override
 	public List<Book> getAllBooks() {
 
@@ -56,7 +74,15 @@ public class BookDaoImpl implements BookDao {
 
 		return listOfBooks;
 	}
-
+	
+	/**
+	 * This method finds a book by its id in the book table and contains the book object in an optional 
+	 * in the event that the book does not exist and is therefore null.
+	 * 
+	 * @param id
+	 * @return 
+	 */
+	
 	@Override
 	public Optional<Book> findBookById(int id) {
 
@@ -93,6 +119,15 @@ public class BookDaoImpl implements BookDao {
 		}
 	}
 
+	/**
+	 * This method updates a book in the book table by its id.
+	 * A boolean is returned to indicate whether the book was updated 
+	 * successfully.
+	 * 
+	 * @param book
+	 * @return 
+	 */
+	
 	@Override
 	public boolean update(Book book) {
 
@@ -118,6 +153,14 @@ public class BookDaoImpl implements BookDao {
 
 		return false;
 	}
+	
+	/**
+	 * This method deletes a book from the book table and returns a boolean 
+	 * to indicate whether the book was deleted successfully.
+	 * 
+	 * @param id
+	 * @return
+	 */
 
 	@Override
 	public boolean delete(int id) {
@@ -138,6 +181,15 @@ public class BookDaoImpl implements BookDao {
 
 		return false;
 	}
+	
+	/**
+	 * This method adds a book to the book table. The parameter is a book without an id parameter, using 
+	 * an overloaded constructor. If the book is successfully added to the book table a book object
+	 * with an id is returned.
+	 * 
+	 *  @param book
+	 *  @return
+	 */
 
 	@Override
 	public Book addBook(Book book) {
@@ -170,7 +222,13 @@ public class BookDaoImpl implements BookDao {
 
 		return null;
 	}
-
+	
+	/**
+	 * This method returns the average price of the books in the book table.
+	 * 
+	 * @return
+	 */
+	
 	@Override
 	public double averageBookPrice() {
 		
