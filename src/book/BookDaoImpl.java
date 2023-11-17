@@ -1,5 +1,6 @@
 package book;
 
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.apache.ibatis.jdbc.ScriptRunner;
+
 import connection.ConnectionManager;
 
 public class BookDaoImpl implements BookDao {
@@ -19,14 +23,20 @@ public class BookDaoImpl implements BookDao {
 	 * An exception is thrown if the class is not found or if there is a SQL error
 	 * 
 	 *  @return 
+	 * @throws FileNotFoundException 
 	 */
 	
 	@Override
-	public void establishConnection() throws ClassNotFoundException, SQLException {
+	public void establishConnection() throws ClassNotFoundException, SQLException, FileNotFoundException {
 
 		if (connection == null) {
 			connection = ConnectionManager.getConnection();
 		}
+		
+		ScriptRunner sr = new ScriptRunner(connection);
+		sr.setAutoCommit(false);
+		sr.setStopOnError(true);
+		sr.runScript(new java.io.FileReader("library_db.sql"));
 	}
 	
 	/**
