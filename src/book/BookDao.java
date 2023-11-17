@@ -1,12 +1,13 @@
 package book;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public interface BookDao {
 	
-	public void establishConnection() throws ClassNotFoundException, SQLException;
+	public void establishConnection() throws ClassNotFoundException, SQLException, FileNotFoundException;
 	
 	public void closeConnection() throws SQLException;
 	
